@@ -2302,6 +2302,14 @@ spec:
                             items:
                               type: string
                             type: array
+                          preImportApplicationSQL:
+                            description: |-
+                              List of SQL queries to be executed as a superuser in the application
+                              database right before it is imported - to be used with extreme care
+                              (by default empty). Only available in microservice type.
+                            items:
+                              type: string
+                            type: array
                           roles:
                             description: The roles to import
                             items:
