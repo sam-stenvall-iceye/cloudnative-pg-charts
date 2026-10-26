@@ -17,6 +17,15 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
       - uses: azure/setup-helm@v4
+      - name: Add chart dependencies
+        run: |
+          helm repo add cnpg-grafana-dashboard \
+            https://cloudnative-pg.github.io/grafana-dashboards
+          helm repo update
+          helm dependency build charts/cloudnative-pg
+          mkdir -p .cr-release-packages
+          helm package charts/cloudnative-pg \
+            --destination .cr-release-packages
       - uses: helm/chart-releaser-action@v1.7.0
         with:
           charts_dir: charts
